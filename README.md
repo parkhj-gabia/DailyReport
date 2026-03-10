@@ -24,6 +24,20 @@
 .\Generate-Report.ps1 <야간근무자이름> <입력파일명>
 ```
 
+> [!IMPORTANT]
+> **스크립트 실행 오류 발생 시 (보안 오류, PSSecurityException)**
+> 
+> 만약 "디지털 서명되지 않았습니다" 또는 "UnauthorizedAccess" 오류가 발생한다면, 윈도우 보안 정책에 의해 차단된 상태입니다. 다음 명령어를 파워쉘에서 실행하여 차단을 해제하세요.
+> 
+> ```powershell
+> Unblock-File -Path .\Generate-Report.ps1
+> ```
+> 
+> 그래도 실행되지 않는 경우, 임시로 보안 정책을 우회하여 실행할 수 있습니다.
+> ```powershell
+> powershell -ExecutionPolicy Bypass -File .\Generate-Report.ps1 <야간근무자이름> <입력파일명>
+> ```
+
 ### 실행 예시
 
 ```powershell
