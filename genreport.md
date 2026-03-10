@@ -44,3 +44,4 @@
    - @dailywork.txt 형식: YYYY-MM-DD HH:MM 근무자 [Tab] 데이터 센터 [Tab] 그룹 [Tab] 서비스 [Tab] 회원아이디 [Tab] 아이피 [Tab] 처리내용 [Tab] [작업]
    - 각 데이터센터(Center)별로 별도의 보고서 파일을 생성한다.
    - 야간근무자이름을 Benedict로 고정하는 설정은 제거하고 인자로 처리하도록 변경되었다.
+
