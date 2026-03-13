@@ -48,6 +48,12 @@ if (Test-Path $dailyworkPath) {
             $dateTimeStr = $cols[0].Trim()
             $worker = $cols[1].Trim()
             $center = $cols[2].Trim()
+            
+            if ($center -eq '강남') {
+                $center = '서초'
+            } elseif ($center -match '과천') {
+                $center = '가산'
+            }
             $group = $cols[3].Trim()
             $service = $cols[4].Trim()
             $memberId = $cols[5].Trim()
@@ -104,10 +110,10 @@ foreach ($dc in $dataCenters) {
     
     $dcItems = $workItems | Where-Object { $_.Center -eq $dc }
     
-    $itemsForGroup2 = $dcItems | Where-Object { $serviceGroup4 -notcontains $_.Service } | Sort-Object SortValue
+    # 4번 그룹 항목 추출 ("하이웍스" 서비스 또는 내용에 "웹훅" 포함)
+    $itemsForGroup2 = $dcItems | Where-Object { ($serviceGroup4 -notcontains $_.Service) -and ($_.Content -notmatch "웹훅") } | Sort-Object SortValue
     
-    # 4번 그룹 항목 추출 (기본)
-    $group4Raw = @($dcItems | Where-Object { $serviceGroup4 -contains $_.Service })
+    $group4Raw = @($dcItems | Where-Object { ($serviceGroup4 -contains $_.Service) -or ($_.Content -match "웹훅") })
     
     # 데이터센터별 고정 수동 항목 객체로 추가 (정렬을 위해)
     if ($dc -match "가산") {
@@ -172,8 +178,8 @@ foreach ($dc in $dataCenters) {
                 $inGroup2 = $false
             }
             
-            # 4) 83/가비아시스템 위치 찾기
-            if ($line -match "^4\)\s*83[/\s]*가비아시스템") {
+            # 4) 83/가비아(웹훅)시스템 위치 찾기
+            if ($line -match "^4\)\s*83[/\s]*가비아") {
                 $outputContent += $line
                 $inGroup4 = $true
                 
